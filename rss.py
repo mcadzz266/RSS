@@ -55,8 +55,6 @@ def create_feed_checker(feed_url):
                 message = f"{mirr_cmd} {entry.link} \n\nTitle ⏩ {entry.title} \n\n⚠️ LimeTorrents"
             elif "etorrent.click" in entry.link:
                 message = f"{mirr_cmd} {entry.link} \n\nTitle ⏩ {entry.title} \n\n⚠️ ETorTV"
-            elif "x265" in entry.category:
-                message = f"{mirr_cmd} {entry.link} \n\nTitle ⏩ {entry.title} \n\n⚠️ x265Tor"
             else:
                 message = f"{mirr_cmd} {entry.link} \n\nTitle ⏩ {entry.title} \n\n⚠️ ThePirateBay"
             try:
