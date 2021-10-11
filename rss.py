@@ -43,12 +43,27 @@ def create_feed_checker(feed_url):
         entry = FEED.entries[0]
         if entry.id != db.get_link(feed_url).link:
                        # ↓ Edit this message as your needs.
-            message = f"**{entry.title}**\n```{entry.link}```"
+            if "eztv.re" in entry.link:   
+                message = f"{mirr_cmd} {entry.torrent_magneturi} \n\nTitle ⏩ {entry.title} \n\n⚠️ EZTV"
+            elif "yts.mx" in entry.link:
+                message = f"{mirr_cmd} {entry.links[1]['href']} \n\nTitle ⏩ {entry.title} \n\n⚠️ YTS"
+            elif "rarbg" in entry.link:
+                message = f"{mirr_cmd} {entry.link} \n\nTitle ⏩ {entry.title} \n\n⚠️ RARBG"
+            elif "watercache" in entry.link:
+                message = f"{mirr_cmd} {entry.link} \n\nTitle ⏩ {entry.title} \n\n⚠️ TorrentGalaxy"
+            elif "limetorrents.pro" in entry.link:
+                message = f"{mirr_cmd} {entry.link} \n\nTitle ⏩ {entry.title} \n\n⚠️ LimeTorrents"
+            elif "etorrent.click" in entry.link:
+                message = f"{mirr_cmd} {entry.link} \n\nTitle ⏩ {entry.title} \n\n⚠️ ETorTV"
+            elif "x265" in entry.category:
+                message = f"{mirr_cmd} {entry.link} \n\nTitle ⏩ {entry.title} \n\n⚠️ x265Tor"
+            else:
+                message = f"{mirr_cmd} {entry.link} \n\nTitle ⏩ {entry.title} \n\n⚠️ ThePirateBay"
             try:
-                app.send_message(log_channel, message)
+                msg = app.send_message(log_channel, message)
                 if app2 is not None:
                     mirr_msg = f"{mirr_cmd} {entry.link}"
-                    app2.send_message(mirr_chat, mirr_msg)
+                    app2.send_message(mirr_chat, message)
                 db.update_link(feed_url, entry.id)
             except FloodWait as e:
                 print(f"FloodWait: {e.x} seconds")
