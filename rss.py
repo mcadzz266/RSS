@@ -16,9 +16,7 @@ try:
     log_channel = int(os.environ["LOG_CHANNEL"])   # Telegram Channel ID where the bot is added and have write permission. You can use group ID too.
     check_interval = int(os.environ.get("INTERVAL", 10))   # Check Interval in seconds.  
     max_instances = int(os.environ.get("MAX_INSTANCES", 3))   # Max parallel instance to be used.
-    str_session = os.environ.get("STR_SESSION")    #String session generate using your tg mobile number for sending mirror cmd on your behalf. Generate using python gen_str.py
-    mirr_chat = int(os.environ.get("MIRROR_CHAT_ID"))    #Group/chat_id of mirror chat or mirror bot to send mirror cmd
-    mirr_cmd = os.environ.get("MIRROR_CMD", "/mirror")    #if you have changed default cmd of mirror bot, replace this.
+    mirr_cmd = os.environ.get("MIRROR_CMD", "/qbmirror1")    #if you have changed default cmd of mirror bot, replace this.
 except Exception as e:
     print(e)
     print("One or more variables missing or have error. Exiting !")
@@ -31,9 +29,6 @@ for feed_url in feed_urls:
 
 
 app = Client(":memory:", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
-app2 = None
-if str_session is not None and str_session != "":
-    app2 = Client(str_session, api_id=api_id, api_hash=api_hash)
 
 def create_feed_checker(feed_url):
     def check_feed():
@@ -46,22 +41,19 @@ def create_feed_checker(feed_url):
             if "eztv.re" in entry.link:   
                 message = f"{mirr_cmd} {entry.torrent_magneturi} \n\nTitle ⏩ {entry.title} \n\n⚠️ EZTV"
             elif "yts.mx" in entry.link:
-                message = f"{mirr_cmd} {entry.links[1]['href']} \n\nTitle ⏩ {entry.title} \n\n⚠️ YTS"
+                message = f"{mirr_cmd} {entry.links[1]['href']}"
             elif "rarbg" in entry.link:
-                message = f"{mirr_cmd} {entry.link} \n\nTitle ⏩ {entry.title} \n\n⚠️ RARBG"
+                message = f"{mirr_cmd} {entry.link}"
             elif "watercache" in entry.link:
-                message = f"{mirr_cmd} {entry.link} \n\nTitle ⏩ {entry.title} \n\n⚠️ TorrentGalaxy"
+                message = f"{mirr_cmd} {entry.link}"
             elif "limetorrents.pro" in entry.link:
-                message = f"{mirr_cmd} {entry.link} \n\nTitle ⏩ {entry.title} \n\n⚠️ LimeTorrents"
+                message = f"{mirr_cmd} {entry.link}"
             elif "etorrent.click" in entry.link:
-                message = f"{mirr_cmd} {entry.link} \n\nTitle ⏩ {entry.title} \n\n⚠️ ETorTV"
+                message = f"{mirr_cmd} {entry.link}"
             else:
-                message = f"{mirr_cmd} {entry.link} \n\nTitle ⏩ {entry.title} \n\n⚠️ ThePirateBay"
+                message = f"{mirr_cmd} {entry.link}"
             try:
                 msg = app.send_message(log_channel, message)
-                if app2 is not None:
-                    mirr_msg = f"{mirr_cmd} {entry.link}"
-                    app2.send_message(mirr_chat, message)
                 db.update_link(feed_url, entry.id)
             except FloodWait as e:
                 print(f"FloodWait: {e.x} seconds")
@@ -78,6 +70,4 @@ for feed_url in feed_urls:
     feed_checker = create_feed_checker(feed_url)
     scheduler.add_job(feed_checker, "interval", seconds=check_interval, max_instances=max_instances)
 scheduler.start()
-if app2 is not None:
-    app2.start()
 app.run()
