@@ -6,8 +6,8 @@
         "RSS Feed",
         "Bot"
     ],
-    "repository": "https://github.com/viperadnan-git/rss-feed-telegram-bot",
-    "success_url": "https://github.com/magneto261290/rss-feed-telegram-bot",
+    "repository": "https://github.com/DragonPower84/rss-kau",
+    "success_url": "https://telegram.me/Kai_8_4",
     "env": {
         "ENV": {
             "description": "idk",
@@ -47,16 +47,6 @@
         "MAX_INSTANCES": {
             "description": "Max instances to be used while checking RSS feed.",
             "value": "3",
-            "required": false
-        },
-        "STR_SESSION": {
-            "description": "String session generate using your tg mobile number for sending mirror cmd on your behalf.Required only if you are using string session to interact with mirror bot. Generate by running python gen_str.py in heroku console",
-            "value": "",
-            "required": false
-        },
-        "MIRROR_CHAT_ID": {
-            "description": "Group/chat_id of mirror chat or mirror bot to send mirror cmd. Required only if you are using string session to interact with mirror bot.",
-            "value": "",
             "required": false
         },
         "MIRROR_CMD": {
