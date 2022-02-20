@@ -31,7 +31,7 @@ python gen_str.py
 ## Deployment
 
 ### Deploying on Heroku
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?template=https://github.com/DragonPower84/rss-kau)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?template=https://github.com/HM-DRIVE/RSS)
 
 ### VPS or any other server/pc
 
