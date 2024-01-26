@@ -72,12 +72,14 @@ async def start_feed_checkers():
     tasks = [create_feed_checker(feed_url) for feed_url in feed_urls]
     await asyncio.gather(*tasks)
 
-async def run():
+async def main():
     scheduler = BackgroundScheduler()
     scheduler.add_job(start_feed_checkers, "interval", seconds=check_interval, max_instances=max_instances)
     scheduler.start()
     await start_feed_checkers()  # Run the initial check
-    app.run()
 
-# Run the asyncio event loop with the main coroutine
-asyncio.run(run())
+    # Run the Pyrogram application
+    await app.run()
+
+# Run the main coroutine in the background
+asyncio.create_task(main())
