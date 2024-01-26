@@ -1,5 +1,6 @@
 import os
 import sys
+import asyncio
 import feedparser
 from sql import db
 from time import sleep, time
@@ -65,9 +66,11 @@ async def create_feed_checker(feed_url):
     return check_feed
 
 
+async def start_feed_checkers():
+    tasks = [create_feed_checker(feed_url) for feed_url in feed_urls]
+    await asyncio.gather(*tasks)
+
 scheduler = BackgroundScheduler()
-for feed_url in feed_urls:
-    feed_checker = create_feed_checker(feed_url)
-    scheduler.add_job(feed_checker, "interval", seconds=check_interval, max_instances=max_instances)
+scheduler.add_job(start_feed_checkers, "interval", seconds=check_interval, max_instances=max_instances)
 scheduler.start()
 app.run()
