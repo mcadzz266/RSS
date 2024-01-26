@@ -66,11 +66,18 @@ async def create_feed_checker(feed_url):
     return check_feed
 
 
+# Existing code...
+
 async def start_feed_checkers():
     tasks = [create_feed_checker(feed_url) for feed_url in feed_urls]
     await asyncio.gather(*tasks)
 
-scheduler = BackgroundScheduler()
-scheduler.add_job(start_feed_checkers, "interval", seconds=check_interval, max_instances=max_instances)
-scheduler.start()
-app.run()
+async def run():
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(start_feed_checkers, "interval", seconds=check_interval, max_instances=max_instances)
+    scheduler.start()
+    await start_feed_checkers()  # Run the initial check
+    app.run()
+
+# Run the asyncio event loop with the main coroutine
+asyncio.run(run())
