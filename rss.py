@@ -78,6 +78,12 @@ async def main():
 
     # Run the Pyrogram application
     await app.start()
+    while True:
+        try:
+            sleep(1)  # Sleep to prevent high CPU usage
+        except KeyboardInterrupt:
+            print("KeyboardInterrupt: Exiting loop")
+            break
 
 # Create and run a new event loop
 async def run():
