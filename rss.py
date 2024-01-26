@@ -77,7 +77,7 @@ async def main():
     await start_feed_checkers()  # Run the initial check
 
     # Run the Pyrogram application
-    await app.run()
+    await app.start()
 
 # Create and run a new event loop
 async def run():
