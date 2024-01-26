@@ -16,7 +16,7 @@ try:
     check_interval = int(os.environ.get("INTERVAL", 10))   # Check Interval in seconds.  
     max_instances = int(os.environ.get("MAX_INSTANCES", 3))   # Max parallel instance to be used.
     mirr_cmd = os.environ.get("MIRROR_CMD", "/qbmirror1")    #if you have changed default cmd of mirror bot, replace this.
-    sstring = oa.environ.get("STR_SESSION", None)
+    sstring = os.environ.get("STR_SESSION", None)
 except Exception as e:
     print(e)
     print("One or more variables missing or have error. Exiting !")
