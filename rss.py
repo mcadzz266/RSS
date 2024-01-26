@@ -58,9 +58,10 @@ async def create_feed_checker(feed_url):
 async def start_feed_checkers():
     while True:
         for feed_url in feed_urls:
-            await create_feed_checker(feed_url)()
+            checker_coroutine = create_feed_checker(feed_url)
+            await checker_coroutine  # Await the coroutine here
         await asyncio.sleep(check_interval)
-
+        
 async def main():
     # Run the Pyrogram application
     await app.start()
