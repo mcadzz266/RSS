@@ -28,7 +28,7 @@ for feed_url in feed_urls:
         db.update_link(feed_url, "*")
 
 
-app = Client("temp", api_id=api_id, api_hash=api_hash, session_string=sstring, in_memory=True))
+app = Client("temp", api_id=api_id, api_hash=api_hash, session_string=sstring, in_memory=True)
 
 async def create_feed_checker(feed_url):
     async def check_feed():
