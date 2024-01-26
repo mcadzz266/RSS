@@ -80,16 +80,10 @@ async def main():
     await app.start()
     while True:
         try:
-            sleep(1)  # Sleep to prevent high CPU usage
+            asyncio.sleep(1)  # Sleep to prevent high CPU usage
         except KeyboardInterrupt:
             print("KeyboardInterrupt: Exiting loop")
             break
 
 # Create and run a new event loop
-async def run():
-    loop = asyncio.get_event_loop()
-    await main()
-
-loop = asyncio.new_event_loop()
-asyncio.set_event_loop(loop)
-loop.run_until_complete(run())
+asyncio.run(main())
