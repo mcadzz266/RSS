@@ -63,11 +63,15 @@ async def start_feed_checkers():
         await asyncio.sleep(check_interval)
         
 async def main():
-    # Run the Pyrogram application
-    await app.start()
 
     # Start the feed checkers
     await start_feed_checkers()
+    await app.start()
+    while True:
+        try:
+            await asyncio.sleep(1)
+        except:
+            exit()
 
 # Run the main coroutine
 asyncio.run(main())
