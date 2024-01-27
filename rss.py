@@ -38,7 +38,7 @@ def create_feed_checker(feed_url):
         entry = FEED.entries[0]
         if entry.id != db.get_link(feed_url).link:
                        # ↓ Edit this message as your needs.
-            if "zoink" in entry.link:   #For EZTV
+            if "eztv" in entry.link:   #For EZTV
                 message = f"{mirr_cmd} {entry.links[-1]['href']}"
             elif "yts" in entry.link:
                 message = f"{mirr_cmd} {entry.links[-1]['href']}"
