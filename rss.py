@@ -47,7 +47,7 @@ def create_feed_checker(feed_url):
             elif "watercache" in entry.link:
                 message = f"{mirr_cmd} {entry.link}"
             elif "limetorrents.lol" in entry.link:
-                message = f"{mirr_cmd} {entry.link}"
+                message = f"{mirr_cmd} {entry.links[1]['href']}"
             elif "etorrent.click" in entry.link:
                 message = f"{mirr_cmd} {entry.link}"
             else:
