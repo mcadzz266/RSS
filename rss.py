@@ -38,17 +38,17 @@ def create_feed_checker(feed_url):
         entry = FEED.entries[0]
         if entry.id != db.get_link(feed_url).link:
                        # ↓ Edit this message as your needs.
-            if "eztv.to" in entry.link:   
-                message = f"{mirr_cmd} {entry.links[1]['href']}"
-            elif "yts.mx" in entry.link:
-                message = f"{mirr_cmd} {entry.links[1]['href']}"
+            if "eztv" in entry.link:   
+                message = f"{mirr_cmd} {entry.links[-1]['href']}"
+            elif "yts" in entry.link:
+                message = f"{mirr_cmd} {entry.links[-1]['href']}"
             elif "rarbg" in entry.link:
                 message = f"{mirr_cmd} {entry.link}"
             elif "watercache" in entry.link:
                 message = f"{mirr_cmd} {entry.link}"
-            elif "limetorrents.lol" in entry.link:
-                message = f"{mirr_cmd} {entry.links[1]['href']}"
-            elif "etorrent.click" in entry.link:
+            elif "limetorrents" in entry.link:
+                message = f"{mirr_cmd} {entry.links[-1]['href']}"
+            elif "etorrent" in entry.link:
                 message = f"{mirr_cmd} {entry.link}"
             else:
                 message = f"{mirr_cmd} {entry.link}"
