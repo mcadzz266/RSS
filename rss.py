@@ -38,16 +38,16 @@ def create_feed_checker(feed_url):
         if len(FEED.entries) == 0:
             return
             
-        if co[0] < co[1]:
-            mirr = cmds[0]
-            co[0] += 1
-        else:
-            mirr = cmds[-1]
-            co[1] += 1
-            
         entry = FEED.entries[0]
         if entry.id != db.get_link(feed_url).link:
-                       # ↓ Edit this message as your needs.
+            if co[0] < co[1]:
+               mirr = cmds[0]
+               co[0] += 1
+            else:
+               mirr = cmds[-1]
+               co[1] += 1
+            # Needy Changes
+                        # ↓ Edit this message as your needs.
             if "eztv" in entry.link:   #For EZTV
                 message = f"{mirr} {entry.links[-1]['href']}"
             elif "yts" in entry.link:
