@@ -17,13 +17,13 @@ try:
     check_interval = int(os.environ.get("INTERVAL", 10))   # Check Interval in seconds.  
     max_instances = int(os.environ.get("MAX_INSTANCES", 3))   # Max parallel instance to be used.
     mirr_cmd = os.environ.get("MIRROR_CMD", "/qbmirror1")    #if you have changed default cmd of mirror bot, replace this.
+    cmds = mirr_cmd.split()
+    co = [0,1]
 except Exception as e:
     print(e)
     print("One or more variables missing or have error. Exiting !")
     sys.exit(1)
 
-
-cmds = mirr_cmd.split()
 
 for feed_url in feed_urls:
     if db.get_link(feed_url) == None:
@@ -32,20 +32,18 @@ for feed_url in feed_urls:
 
 app = Client(":memory:", api_id=api_id, api_hash=api_hash, session_string=bot_token)
 
-c1 = 0
-c2 = 1
 def create_feed_checker(feed_url):
     def check_feed():
         FEED = feedparser.parse(feed_url)
         if len(FEED.entries) == 0:
             return
             
-        if c1 < c2:
+        if co[0] < co[1]:
             mirr = cmds[0]
-            c1 += 1
+            co[0] += 1
         else:
             mirr = cmds[-1]
-            c2 += 1
+            co[1] += 1
             
         entry = FEED.entries[0]
         if entry.id != db.get_link(feed_url).link:
