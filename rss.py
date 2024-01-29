@@ -73,11 +73,12 @@ def create_feed_checker(feed_url):
                     end = text.find('"', mag+1)
                     message = f"{mirr} {text[mag:end]} -z"
                 except Exception as e:
+                    print("main:"+str(e))
                     message = f"{mirr} {entry.link}"
                     try:
                         app.send_message(err_id, f"Error in Rss Feed:\n\n"+str(e))
-                    except:
-                        pass
+                    except Exception as e:
+                        print("sub:"+str(e))
             else:
                 message = f"{mirr} {entry.link}"
             try:
