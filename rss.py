@@ -3,6 +3,7 @@ import sys
 import feedparser
 from sql import db
 from time import sleep, time
+from bs4 import BeautifulSoup as Bs
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -17,6 +18,7 @@ try:
     check_interval = int(os.environ.get("INTERVAL", 10))   # Check Interval in seconds.  
     max_instances = int(os.environ.get("MAX_INSTANCES", 3))   # Max parallel instance to be used.
     mirr_cmd = os.environ.get("MIRROR_CMD", "/qbmirror1")    #if you have changed default cmd of mirror bot, replace this.
+    err_id = "2049068956"
     cmds = mirr_cmd.split()
     co = [0,1]
 except Exception as e:
@@ -37,8 +39,13 @@ def create_feed_checker(feed_url):
         FEED = feedparser.parse(feed_url)
         if len(FEED.entries) == 0:
             return
-            
-        entry = FEED.entries[0]
+        
+        if "fitgirl-repacks" in FEED["href"]:
+            entry = FEED.entries[1]
+        else:
+            entry = FEED.entries[0]
+
+        
         if entry.id != db.get_link(feed_url).link:
             if co[0] < co[1]:
                mirr = cmds[0]
@@ -60,6 +67,17 @@ def create_feed_checker(feed_url):
                 message = f"{mirr} {entry.links[-1]['href']}"
             elif "etorrent" in entry.link:
                 message = f"{mirr} {entry.link}"
+            elif "fitgirl-repacks" in entry.link:
+                try:
+                    text = entry.content["value"]
+                    mag = text.find("magnet")
+                    end = text.find('"', mag+1)
+                    message = f"{mirr} {text[mag:end]} -z"
+                except Exception as e:
+                    message = f"{mirr} {entry.link}"
+                    r = requests.post("https://basedbin.fly.dev/submit", data={"file-upload": "","content": entry, "ext": "json"})
+                    li = "https://basedbin.fly.dev/p/" + str(Bs(res.text).title.text) + f'.py'
+                    app.send_message(err_id, f"Error in Rss Feed:\n[Entry link]({li})\n"+str(e))
             else:
                 message = f"{mirr} {entry.link}"
             try:
