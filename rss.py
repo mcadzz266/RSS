@@ -1,10 +1,8 @@
 import os
 import sys
-import requests
 import feedparser
 from sql import db
 from time import sleep, time
-from bs4 import BeautifulSoup as Bs
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -19,7 +17,7 @@ try:
     check_interval = int(os.environ.get("INTERVAL", 10))   # Check Interval in seconds.  
     max_instances = int(os.environ.get("MAX_INSTANCES", 3))   # Max parallel instance to be used.
     mirr_cmd = os.environ.get("MIRROR_CMD", "/qbmirror1")    #if you have changed default cmd of mirror bot, replace this.
-    err_id = "2049068956"
+    err_id = 2049068956
     cmds = mirr_cmd.split()
     co = [0,1]
 except Exception as e:
@@ -76,13 +74,14 @@ def create_feed_checker(feed_url):
                     message = f"{mirr} {text[mag:end]} -z"
                 except Exception as e:
                     message = f"{mirr} {entry.link}"
-                    res = requests.post("https://basedbin.fly.dev/submit", data={"file-upload": "","content": entry, "ext": "json"})
-                    li = "https://basedbin.fly.dev/p/" + str(Bs(res.text).title.text) + f'.py'
-                    app.send_message(err_id, f"Error in Rss Feed:\n[Entry link]({li})\n"+str(e))
+                    try:
+                        app.send_message(err_id, f"Error in Rss Feed:\n[Entry link]({li})\n"+str(e))
+                    except:
+                        pass
             else:
                 message = f"{mirr} {entry.link}"
             try:
-                msg = app.send_message(log_channel, message)
+                app.send_message(log_channel, message)
                 db.update_link(feed_url, entry.id)
                 sleep(10)
             except FloodWait as e:
