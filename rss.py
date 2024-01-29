@@ -68,7 +68,7 @@ def create_feed_checker(feed_url):
                 message = f"{mirr} {entry.link}"
             elif "fitgirl-repacks" in entry.link:
                 try:
-                    text = entry.content["value"]
+                    text = entry.content[0]["value"]
                     mag = text.find("magnet")
                     end = text.find('"', mag+1)
                     message = f"{mirr} {text[mag:end]} -z"
