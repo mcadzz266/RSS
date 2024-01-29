@@ -1,5 +1,6 @@
 import os
 import sys
+import requests
 import feedparser
 from sql import db
 from time import sleep, time
