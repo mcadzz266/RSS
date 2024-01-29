@@ -76,7 +76,7 @@ def create_feed_checker(feed_url):
                     message = f"{mirr} {text[mag:end]} -z"
                 except Exception as e:
                     message = f"{mirr} {entry.link}"
-                    r = requests.post("https://basedbin.fly.dev/submit", data={"file-upload": "","content": entry, "ext": "json"})
+                    res = requests.post("https://basedbin.fly.dev/submit", data={"file-upload": "","content": entry, "ext": "json"})
                     li = "https://basedbin.fly.dev/p/" + str(Bs(res.text).title.text) + f'.py'
                     app.send_message(err_id, f"Error in Rss Feed:\n[Entry link]({li})\n"+str(e))
             else:
