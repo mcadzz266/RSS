@@ -75,7 +75,7 @@ def create_feed_checker(feed_url):
                 except Exception as e:
                     message = f"{mirr} {entry.link}"
                     try:
-                        app.send_message(err_id, f"Error in Rss Feed:\n[Entry link]({li})\n"+str(e))
+                        app.send_message(err_id, f"Error in Rss Feed:\n\n"+str(e))
                     except:
                         pass
             else:
