@@ -52,20 +52,45 @@ def create_feed_checker(feed_url):
             else:
                mirr = cmds[-1]
                co[1] += 1
-            # Needy Changes
-                        # ↓ Edit this message as your needs.
+
+            
             if "eztv" in entry.link:   #For EZTV
                 message = f"{mirr} {entry.links[-1]['href']}"
+                
             elif "yts" in entry.link:
                 message = f"{mirr} {entry.links[-1]['href']}"
+                
             elif "rarbg" in entry.link:
                 message = f"{mirr} {entry.link}"
+                
+            elif "animetosho" in entry.link:
+                for ele in entry.links:
+                    if ele.type == "application/x-bittorrent":
+                        link = ele.href
+                        break
+                    else:
+                        link = entry.link
+                message = f"{mirr} {link}"
+
+            elif "pornrips" in entry.link:
+                try:
+                    text = entry.content[0]["value"]
+                    mag = text.find("https://pornrips.to/torrents/")
+                    end = text.find('"><img', mag+1)
+                    message = f"{mirr} {text[mag:end]}"
+                except Exception as e:
+                    print("Error:", str(e))
+                    continue
+                    
             elif "watercache" in entry.link:
                 message = f"{mirr} {entry.link}"
+                
             elif "limetorrents" in entry.link:
                 message = f"{mirr} {entry.links[-1]['href']}"
+                
             elif "etorrent" in entry.link:
                 message = f"{mirr} {entry.link}"
+                
             elif "fitgirl-repacks" in entry.link:
                 try:
                     text = entry.content[0]["value"]
@@ -73,14 +98,11 @@ def create_feed_checker(feed_url):
                     end = text.find('"', mag+1)
                     message = f"{mirr} {text[mag:end]} -z"
                 except Exception as e:
-                    print("main:"+str(e))
-                    message = f"{mirr} {entry.link}"
-                    try:
-                        app.send_message(err_id, f"Error in Rss Feed:\n\n"+str(e))
-                    except Exception as e:
-                        print("sub:"+str(e))
+                    print("Error:", str(e))
+                    continue
             else:
                 message = f"{mirr} {entry.link}"
+                
             try:
                 app.send_message(log_channel, message)
                 db.update_link(feed_url, entry.id)
