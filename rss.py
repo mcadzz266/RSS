@@ -53,6 +53,7 @@ def create_feed_checker(feed_url):
                mirr = cmds[-1]
                co[1] += 1
 
+            message = f"{mirr} {entry.link}" # Default If Any Error Causes
             
             if "eztv" in entry.link:   #For EZTV
                 message = f"{mirr} {entry.links[-1]['href']}"
@@ -80,7 +81,6 @@ def create_feed_checker(feed_url):
                     message = f"{mirr} {text[mag:end]}"
                 except Exception as e:
                     print("Error:", str(e))
-                    continue
                     
             elif "watercache" in entry.link:
                 message = f"{mirr} {entry.link}"
@@ -99,7 +99,6 @@ def create_feed_checker(feed_url):
                     message = f"{mirr} {text[mag:end]} -z"
                 except Exception as e:
                     print("Error:", str(e))
-                    continue
             else:
                 message = f"{mirr} {entry.link}"
                 
