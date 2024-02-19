@@ -93,7 +93,7 @@ def create_feed_checker(feed_url):
                     end = text.find('"><img', mag+1)
                     message = f"{mirr} {text[mag:end]}"
                 except Exception as e:
-                    print("Error:", str(e))
+                    print("PornRips Error:", str(e))
                     
             elif "watercache" in entry.link:
                 if check_nsff(entry.link):
@@ -115,32 +115,23 @@ def create_feed_checker(feed_url):
                     end = text.find('"', mag+1)
                     message = f"{mirr} {text[mag:end]} -z"
                 except Exception as e:
-                    print("Error:", str(e))
+                    print("FitGirl Error:", str(e))
             else:
                 message = f"{mirr} {entry.link}"
 
             if nsf:
-                try:
-                    app.send_message(ns, message)
-                except Floodwait as e:
-                    print(f"Floodwait: {e.x} seconds")
-                    sleep(e.x)
-                    app.send_message(ns, message)
-                except Exception as e:
-                    print(e)
-                    
-                db.update_link(feed_url, entry.id)
+                sen_ch = ns
             else:
-                try:
-                    app.send_message(ts, message)
-                except Floodwait as e:
-                    print(f"Floodwait: {e.x} seconds")
-                    sleep(e.x)
-                    app.send_message(ts, message)
-                except Exception as e:
-                    print(e)
-                db.update_link(feed_url, entry.id)
-            
+                sen_ch = ts
+            try:
+                app.send_message(sen_ch, message)
+            except Floodwait as e:
+                print(f"Floodwait: {e.value} seconds")
+                sleep(e.value+3)
+                app.send_message(ns, message)
+            except Exception as e:
+                print(str(e))
+            db.update_link(feed_url, entry.id)
         else:
             print(f"Checked RSS FEED: {entry.id}")
     return check_feed
