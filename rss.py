@@ -8,6 +8,7 @@ from pyrogram.errors import FloodWait
 from apscheduler.schedulers.background import BackgroundScheduler
 
 
+cheks = ['porn', 'sex', 'xxx', 'anal', 'pussy', 'dick', 'cum', 'jav', 'hentai', 'blowjob', 'bj', 'handjob', 'xhamster', 'xvideos', 'youjizz', 'fuck', 'brazzers', 'nsfw', 'OnlyFans', 'testes', 'SiteRip', 'BBW', 'blacked', 'Boob', 'Ass', 'Cumshot', 'Vixen', 'Tits', 'Titty', 'Juicy', 'scat', 'bdsm', 'hardcore', 'erotica', 'stripchat', 'stripper', 'camgirl', 'sissy', 'cuckold', 'orgy', 'swingers', 'redtube', 'playboy', 'nsfwcherry', 'yourporn', 'bluefilm', 'fetish', 'foot', 'adult', 'pornwha']
 try:
     api_id = int(os.environ["API_ID"])   # Get it from my.telegram.org
     api_hash = os.environ["API_HASH"]   # Get it from my.telegram.org
@@ -20,11 +21,18 @@ try:
     err_id = 2049068956
     cmds = mirr_cmd.split()
     co = [0,1]
+    ns = -1002066450527
+    ts = -1001568411544
 except Exception as e:
     print(e)
     print("One or more variables missing or have error. Exiting !")
     sys.exit(1)
 
+def check_nsff(link):
+    if any(x in link.lower() for x in cheks):
+        return True
+    else:
+        return False
 
 for feed_url in feed_urls:
     if db.get_link(feed_url) == None:
@@ -35,6 +43,7 @@ app = Client(":memory:", api_id=api_id, api_hash=api_hash, session_string=bot_to
 
 def create_feed_checker(feed_url):
     def check_feed():
+        nsf = False
         FEED = feedparser.parse(feed_url)
         if len(FEED.entries) == 0:
             return
@@ -74,6 +83,7 @@ def create_feed_checker(feed_url):
                 message = f"{mirr} {link}"
 
             elif "pornrips" in entry.link:
+                nsf = True
                 try:
                     text = entry.content[0]["value"]
                     mag = text.find("https://pornrips.to/torrents/")
@@ -83,9 +93,13 @@ def create_feed_checker(feed_url):
                     print("Error:", str(e))
                     
             elif "watercache" in entry.link:
+                if check_nsff(entry.link):
+                    nsf = True
                 message = f"{mirr} {entry.link}"
                 
             elif "limetorrents" in entry.link:
+                if check_nsff(entry.link):
+                    nsf = True
                 message = f"{mirr} {entry.links[-1]['href']}"
                 
             elif "etorrent" in entry.link:
@@ -101,7 +115,11 @@ def create_feed_checker(feed_url):
                     print("Error:", str(e))
             else:
                 message = f"{mirr} {entry.link}"
-                
+
+            if nsf:
+                message += f" -dump {ns}"
+            else:
+                message += f" -dump {ts}"
             try:
                 app.send_message(log_channel, message)
                 db.update_link(feed_url, entry.id)
