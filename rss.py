@@ -65,7 +65,10 @@ def create_feed_checker(feed_url):
             message = f"{mirr} {entry.link}" # Default If Any Error Causes
             
             if "eztv" in entry.link:   #For EZTV
-                message = f"{mirr} {entry.links[-1]['href']}"
+                extv = entry.links[-1]['href']
+                if " " in extv:
+                    extv = extv.replace(" ", "%20")
+                message = f"{mirr} {extv}"
                 
             elif "yts" in entry.link:
                 message = f"{mirr} {entry.links[-1]['href']}"
