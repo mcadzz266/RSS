@@ -120,18 +120,27 @@ def create_feed_checker(feed_url):
                 message = f"{mirr} {entry.link}"
 
             if nsf:
-                message += f" -dump {ns}"
-            else:
-                message += f" -dump {ts}"
-            try:
-                app.send_message(log_channel, message)
+                try:
+                    app.send_message(ns, message)
+                except Floodwait as e:
+                    print(f"Floodwait: {e.x} seconds")
+                    sleep(e.x)
+                    app.send_message(ns, message)
+                except Exception as e:
+                    print(e)
+                    
                 db.update_link(feed_url, entry.id)
-                sleep(10)
-            except FloodWait as e:
-                print(f"FloodWait: {e.x} seconds")
-                sleep(e.x)
-            except Exception as e:
-                print(e)
+            else:
+                try:
+                    app.send_message(ts, message)
+                except Floodwait as e:
+                    print(f"Floodwait: {e.x} seconds")
+                    sleep(e.x)
+                    app.send_message(ts, message)
+                except Exception as e:
+                    print(e)
+                db.update_link(feed_url, entry.id)
+            
         else:
             print(f"Checked RSS FEED: {entry.id}")
     return check_feed
