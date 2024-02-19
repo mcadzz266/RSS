@@ -8,7 +8,7 @@ from pyrogram.errors import FloodWait
 from apscheduler.schedulers.background import BackgroundScheduler
 
 
-cheks = ['porn', 'sex', 'xxx', 'anal', 'pussy', 'dick', 'cum', 'jav', 'hentai', 'blowjob', 'bj', 'handjob', 'xhamster', 'xvideos', 'youjizz', 'fuck', 'brazzers', 'nsfw', 'OnlyFans', 'testes', 'SiteRip', 'BBW', 'blacked', 'Boob', 'Ass', 'Cumshot', 'Vixen', 'Tits', 'Titty', 'Juicy', 'scat', 'bdsm', 'hardcore', 'erotica', 'stripchat', 'stripper', 'camgirl', 'sissy', 'cuckold', 'orgy', 'swingers', 'redtube', 'playboy', 'nsfwcherry', 'yourporn', 'bluefilm', 'fetish', 'foot', 'adult', 'pornwha']
+cheks = ['porn', 'sex', 'xxx', 'anal', 'pussy', 'dick', 'cum', 'jav', 'hentai', 'blowjob', 'bj', 'handjob', 'xhamster', 'xvideos', 'youjizz', 'fuck', 'brazzers', 'nsfw', 'onlyfans', 'testes', 'siterip', 'bbw', 'blacked', 'boob', 'ass', 'cumshot', 'vixen', 'tits', 'titty', 'juicy', 'scat', 'bdsm', 'hardcore', 'erotica', 'stripchat', 'stripper', 'camgirl', 'sissy', 'cuckold', 'orgy', 'swingers', 'redtube', 'playboy', 'nsfwcherry', 'yourporn', 'bluefilm', 'fetish', 'foot', 'adult', 'pornwha']
 try:
     api_id = int(os.environ["API_ID"])   # Get it from my.telegram.org
     api_hash = os.environ["API_HASH"]   # Get it from my.telegram.org
