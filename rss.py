@@ -60,7 +60,9 @@ cheks = [
     'pornwha',
     'wet',
     'butt',
-    'cock'
+    'cock',
+    'split',
+    'scenes'
 ]
 
 try:
