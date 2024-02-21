@@ -62,7 +62,9 @@ cheks = [
     'butt',
     'cock',
     'split',
-    'scenes'
+    'scenes',
+    'par-kplatz', # German for Parking Spots
+    'bukkake'
 ]
 
 try:
