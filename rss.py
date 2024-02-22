@@ -138,11 +138,9 @@ def create_feed_checker(feed_url):
                 
             elif "animetosho" in entry.link:
                 for ele in entry.links:
+                    link = ele.href
                     if ele.type == "application/x-bittorrent":
-                        link = ele.href
                         break
-                    else:
-                        link = entry.link
                 message = f"{mirr} {link}"
 
             elif "pornrips" in entry.link:
@@ -179,10 +177,7 @@ def create_feed_checker(feed_url):
             else:
                 message = f"{mirr} {entry.link}"
 
-            if nsf:
-                sen_ch = ns
-            else:
-                sen_ch = ts
+            sen_ch = ns if nsf else ts
             try:
                 app.send_message(sen_ch, message)
             except Floodwait as e:
