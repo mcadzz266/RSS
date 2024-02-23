@@ -72,7 +72,11 @@ cheks = [
     'mommy',
     'bang',
     'perv',
-    'beauties'
+    'beauties',
+    'yuri',
+    'yurievij',
+    'sensual',
+    'pov'
 ]
 
 try:
