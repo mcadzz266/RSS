@@ -76,7 +76,8 @@ cheks = [
     'yuri',
     'yurievij',
     'sensual',
-    'pov'
+    'pov',
+    'horny'
 ]
 
 try:
