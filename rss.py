@@ -80,7 +80,9 @@ cheks = [
     'pov',
     'horny',
     'czech',
-    'whore'
+    'whore',
+    'hstream',
+    'dangercore'
 ]
 
 try:
