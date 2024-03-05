@@ -104,6 +104,12 @@ except Exception as e:
     print("One or more variables missing or have error. Exiting !")
     sys.exit(1)
 
+def sequential_number(number_list):
+    index = 0
+    while True:
+        yield number_list[index]
+        index = (index + 1) % len(number_list)
+    
 def check_nsff(link):
     if any(x in link.lower() for x in cheks):
         return True
@@ -131,12 +137,8 @@ def create_feed_checker(feed_url):
 
         
         if entry.id != db.get_link(feed_url).link:
-            if co[0] < co[1]:
-               mirr = cmds[0]
-               co[0] += 1
-            else:
-               mirr = cmds[-1]
-               co[1] += 1
+            num = sequential_number(cmds)
+            mirr = next(num)
 
             message = f"{mirr} {entry.link}" # Default If Any Error Causes
             
