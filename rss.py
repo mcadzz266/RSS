@@ -119,7 +119,7 @@ for feed_url in feed_urls:
 
 app = Client(":memory:", api_id=api_id, api_hash=api_hash, session_string=bot_token)
 
-def create_feed_checker(feed_url, mirr):
+def create_feed_checker(feed_url):
     def check_feed():
         nsf = False
         FEED = feedparser.parse(feed_url)
@@ -133,6 +133,9 @@ def create_feed_checker(feed_url, mirr):
 
         
         if entry.id != db.get_link(feed_url).link:
+            c = co % cn
+            mirr = cmds[c]
+            co += 1
 
             message = f"{mirr} {entry.link}" # Default If Any Error Causes
             
@@ -206,10 +209,7 @@ def create_feed_checker(feed_url, mirr):
 
 scheduler = BackgroundScheduler()
 for feed_url in feed_urls:
-    n = co % cn
-    mirr = cmds[n]
-    co += 1
-    feed_checker = create_feed_checker(feed_url, mirr)
+    feed_checker = create_feed_checker(feed_url)
     scheduler.add_job(feed_checker, "interval", seconds=check_interval, max_instances=max_instances)
 scheduler.start()
 app.run()
