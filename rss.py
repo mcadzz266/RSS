@@ -97,7 +97,7 @@ try:
     err_id = 2049068956
     cmds = mirr_cmd.split()
     cn = len(cmds)
-    co = 0
+    co = [0, 1]
     ns = -1002066450527
     ts = -1001568411544
 except Exception as e:
@@ -133,9 +133,9 @@ def create_feed_checker(feed_url):
 
         
         if entry.id != db.get_link(feed_url).link:
-            c = co % cn
+            c = co[0] % cn
             mirr = cmds[c]
-            co += 1
+            co[0] += 1
 
             message = f"{mirr} {entry.link}" # Default If Any Error Causes
             
