@@ -96,7 +96,8 @@ try:
     mirr_cmd = os.environ.get("MIRROR_CMD", "/qbmirror1")    #if you have changed default cmd of mirror bot, replace this.
     err_id = 2049068956
     cmds = mirr_cmd.split()
-    co = [0,1]
+    cn = len(cmds)
+    co = 0
     ns = -1002066450527
     ts = -1001568411544
 except Exception as e:
@@ -104,12 +105,7 @@ except Exception as e:
     print("One or more variables missing or have error. Exiting !")
     sys.exit(1)
 
-def sequential_number(number_list):
-    index = 0
-    while True:
-        yield number_list[index]
-        index = (index + 1) % len(number_list)
-    
+
 def check_nsff(link):
     if any(x in link.lower() for x in cheks):
         return True
@@ -123,7 +119,7 @@ for feed_url in feed_urls:
 
 app = Client(":memory:", api_id=api_id, api_hash=api_hash, session_string=bot_token)
 
-def create_feed_checker(feed_url):
+def create_feed_checker(feed_url, mirr):
     def check_feed():
         nsf = False
         FEED = feedparser.parse(feed_url)
@@ -137,8 +133,6 @@ def create_feed_checker(feed_url):
 
         
         if entry.id != db.get_link(feed_url).link:
-            num = sequential_number(cmds)
-            mirr = next(num)
 
             message = f"{mirr} {entry.link}" # Default If Any Error Causes
             
@@ -212,7 +206,10 @@ def create_feed_checker(feed_url):
 
 scheduler = BackgroundScheduler()
 for feed_url in feed_urls:
-    feed_checker = create_feed_checker(feed_url)
+    n = co % cn
+    mirr = cmds[n]
+    co += 1
+    feed_checker = create_feed_checker(feed_url, mirr)
     scheduler.add_job(feed_checker, "interval", seconds=check_interval, max_instances=max_instances)
 scheduler.start()
 app.run()
