@@ -83,7 +83,15 @@ cheks = [
     'whore',
     'hstream',
     'dangercore',
-    'hookup'
+    'hookup',
+    'babe',
+    'babestationx',
+    'daughter',
+    'daughter go black',
+    'mature',
+    'squirt',
+    'squirting',
+    'tgxxx'
 ]
 
 try:
