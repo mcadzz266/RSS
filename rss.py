@@ -6,6 +6,7 @@ from time import sleep, time
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
 from apscheduler.schedulers.background import BackgroundScheduler
+from pyrogram import __version__ as pyrover
 
 cheks = [
     'porn',
@@ -91,7 +92,9 @@ cheks = [
     'mature',
     'squirt',
     'squirting',
-    'tgxxx'
+    'tgxxx',
+    'say uncle-',
+    'say uncle'
 ]
 
 try:
@@ -125,8 +128,11 @@ for feed_url in feed_urls:
     if db.get_link(feed_url) == None:
         db.update_link(feed_url, "*")
 
+device = f"Nokia Lumia 1020"
+ver = f"LucidGram {pyrover}"
+system = f"Windows 10 Mobile"
 
-app = Client(":memory:", api_id=api_id, api_hash=api_hash, session_string=bot_token)
+app = Client(":memory:", api_id=api_id, api_hash=api_hash, session_string=bot_token, app_version=ver, device_model=device, system_version=system)
 
 def create_feed_checker(feed_url):
     def check_feed():
