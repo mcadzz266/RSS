@@ -94,7 +94,22 @@ cheks = [
     'squirting',
     'tgxxx',
     'say uncle-',
-    'say uncle'
+    'say uncle',
+    'rhodes',
+    'dvdfull',
+    'x-art',
+    'futanari',
+    'threesome',
+    'threeway',
+    'foursome',
+    'fourway',
+    'fick',
+    'manyvids',
+    'lolita',
+    'truelesbian',
+    'theslutsnextdoor',
+    'lesbian',
+    'slut'
 ]
 
 try:
