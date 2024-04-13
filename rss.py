@@ -109,7 +109,14 @@ cheks = [
     'truelesbian',
     'theslutsnextdoor',
     'lesbian',
-    'slut'
+    'slut',
+    'girlfriend.experience',
+    'date',
+    'date with destiny',
+    'grandmas.dirty',
+    'girl.training',
+    'danger girls',
+    'gonzo.style'
 ]
 
 try:
